@@ -3,9 +3,9 @@ from sqlalchemy.orm import Session
 from typing import List
 from urllib.parse import urlparse
 
-from app.db.session import get_db
-from app.models.models import Company
-from app.schemas import schemas
+from src.app.db.session import get_db
+from src.app.models.models import Company
+from src.app.schemas import schemas
 
 router = APIRouter()
 

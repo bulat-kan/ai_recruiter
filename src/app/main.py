@@ -1,8 +1,14 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api.endpoints import companies, jobs
-from app.db.init_db import init_db
+from src.app.api.endpoints import companies, jobs
+from src.app.db.init_db import init_db
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 app = FastAPI(title="Job Board API")
 

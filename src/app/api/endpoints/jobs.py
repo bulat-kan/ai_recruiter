@@ -3,9 +3,9 @@ from sqlalchemy.orm import Session
 from typing import List
 from datetime import datetime
 
-from app.db.session import get_db
-from app.models.models import Company, JobPosting
-from app.schemas import schemas 
+from src.app.db.session import get_db
+from src.app.models.models import Company, JobPosting
+from src.app.schemas import schemas 
 from openai import OpenAI
 
 
@@ -78,17 +78,9 @@ def create_job_description(job_id: int, request: schemas.JobDescriptionRequest, 
     
     tools_string = "\n".join(request.required_tools)
     prompt = f"""
-        Based on the provided tools, create a detailed job description for the position of {db_job.title}.
+        First, check if the tools: {tools_string} are valid and exist before using them, if tool doesn't exist do not use it.
+        Based on the provided tools, create a brief job description for the position of {db_job.title}.
         Make sure to incorporate these required tools: {tools_string}
-        
-        The job description should include:
-        1. A brief overview of the role
-        2. Key responsibilities
-        3. Required qualifications and skills
-        4. Preferred qualifications
-        5. How the required tools will be used in the role
-        
-        Make it professional and engaging.
     """
     client = OpenAI()
     response = client.chat.completions.create(
@@ -98,7 +90,7 @@ def create_job_description(job_id: int, request: schemas.JobDescriptionRequest, 
             {"role": "user", "content": prompt}
         ],
         temperature=0.7,
-        max_tokens=1000
+        max_tokens=100
     )
     
     # Update the job description in the database

@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, Float, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
 
-from app.db.session import Base
+from src.app.db.session import Base
 
 
 class Company(Base):

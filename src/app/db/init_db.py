@@ -2,8 +2,8 @@ from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
 import logging
 
-from app.db.session import Base, engine
-from app.models.models import Company, JobPosting
+from src.app.db.session import Base, engine
+from src.app.models.models import Company, JobPosting
 
 logger = logging.getLogger(__name__)
 
