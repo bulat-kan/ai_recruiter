@@ -76,7 +76,11 @@ def create_job_description(job_id: int, request: schemas.JobDescriptionRequest, 
     if db_job is None:
         raise HTTPException(status_code=404, detail="Job not found")
     
+    if request.required_tools is None:
+        raise HTTPException(status_code=400, detail="Required tools are required")
+    
     tools_string = "\n".join(request.required_tools)
+    
     prompt = f"""
         First, check if the tools: {tools_string} are valid and exist before using them, if tool doesn't exist do not use it.
         Based on the provided tools, create a brief job description for the position of {db_job.title}.
